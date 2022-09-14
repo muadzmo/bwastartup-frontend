@@ -34,13 +34,20 @@
       </div>
       <hr />
       <div class="block mb-2">
-        <div class="w-full lg:max-w-full lg:flex mb-4" v-for="i in 5" :key="i">
-          <div
+        <div
+          class="w-full lg:max-w-full lg:flex mb-4"
+          v-for="campaign in campaigns"
+          :key="campaign.id"
+        >
+          <!-- <div
             class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
-            style="
-              background-image: url('https://tailwindcss.com/img/card-left.jpg');
+            :style="
+              'background-color:#bbb; background-position:center; background-image: url(' +
+              $axios.defaults.baseURL +
+              campaign.image_url +
+              ')'
             "
-          ></div>
+          ></div> -->
           <div
             class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-8 flex flex-col justify-between leading-normal"
           >
@@ -59,12 +66,12 @@
               </p>
             </div>
             <div class="flex items-center">
-              <nuxt-link
-                :to="'/dashboard/projects/' + i"
+              <!-- <nuxt-link
+                :to="'/dashboard/projects/' + campaign.id"
                 class="bg-green-button text-white py-2 px-4 rounded"
               >
                 Detail
-              </nuxt-link>
+              </nuxt-link> -->
             </div>
           </div>
         </div>
@@ -75,3 +82,16 @@
     <Footer />
   </div>
 </template>
+
+<script>
+export default {
+  middleware: 'auth',
+  async asyncData({ $axios, app }) {
+    const campaigns = await $axios.get(
+      'api/v1/campaigns?user_id=' + app.$auth.user.id
+    )
+    console.log(campaigns.data.data)
+    return campaigns
+  },
+}
+</script>

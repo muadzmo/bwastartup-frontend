@@ -59,13 +59,13 @@ export default {
       local: {
         endpoints: {
           login: {
-            url: '/api/v1/sessions',
+            url: 'api/v1/sessions',
             method: 'post',
             propertyName: 'data.token',
           },
           logout: false,
-          usr: {
-            url: '/api/v1/users/fetch',
+          user: {
+            url: 'api/v1/users/fetch',
             method: 'get',
             propertyName: 'data',
           },
